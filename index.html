@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<title>الوحدة التعليمية | Crocodile</title>
+<style>
+:root{--bg:#101114;--panel:#1b1d22;--panel2:#22252b;--gold:#d6ad55;--gold2:#f0d38b;--text:#f5f2ea;--muted:#aaa7a0;--line:#393a3e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;padding:18px}
+.wrap{max-width:900px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:8px 2px 18px;margin-bottom:18px}
+.brand{font-weight:bold;color:var(--gold);font-size:22px}.sub{color:var(--muted);font-size:13px;margin-top:5px}
+h1{font-size:23px;margin:0;color:var(--gold2)}h2{font-size:18px;margin:0 0 14px;color:var(--gold2)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 8px 24px #0003}
+label{display:block;color:var(--muted);font-size:14px;margin:0 0 8px}
+.days{display:flex;flex-wrap:wrap;gap:9px}
+.days label{display:flex;align-items:center;gap:7px;background:#111317;border:1px solid #44464d;border-radius:9px;padding:9px 12px;margin:0;color:var(--text)}
+.days input{width:auto;accent-color:var(--gold);margin:0}
+input,textarea,select{width:100%;background:#111317;border:1px solid #44464d;border-radius:10px;color:var(--text);padding:12px;font:inherit;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}select{border:1px solid #44464d;border-radius:10px;color:var(--text);padding:12px;font:inherit}textarea{min-height:70px;resize:vertical}
+.field{margin-bottom:12px}.date-row{display:flex;gap:8px;align-items:center;margin:8px 0}.date-row input{flex:1}.point{display:flex;gap:8px;align-items:center;margin:9px 0}.point input{flex:1}
+button{font:inherit;cursor:pointer;border:1px solid var(--gold);border-radius:10px;padding:10px 14px;background:var(--gold);color:#171717;font-weight:bold}
+button.secondary{background:transparent;color:var(--gold2)}button.danger{border-color:#a74b4b;color:#ffb7b7;background:transparent}
+button.small{padding:8px 11px;font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 8px}
+.drill{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.drillhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--gold2);font-weight:bold}
+.drillgrid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(130px,.7fr) minmax(0,1.2fr);gap:12px}
+.empty{color:var(--muted);font-size:13px}.status{color:var(--gold2);font-size:13px;min-height:20px;margin-top:8px}
+footer{text-align:center;color:#777;font-size:12px;margin:25px 0 8px}.print-meta{display:none}
+@media(max-width:600px){body{padding:11px}.card{padding:14px}.drillgrid{grid-template-columns:1fr}.top{align-items:flex-start}h1{font-size:20px}}
+@media print{body{background:#fff;color:#111;padding:0}.wrap{max-width:none}.top{border-color:#bbb}.brand,h1,h2,.drillhead{color:#222}.card,.drill{background:#fff;border:1px solid #aaa;box-shadow:none;break-inside:avoid}input,textarea{background:#fff;color:#111;border:0;border-bottom:1px solid #aaa;padding:5px 0}.no-print,button,.status{display:none!important}label{color:#444}.sub,footer{color:#555}.point input{border-bottom:1px solid #aaa}}
+
+/* تحسينات الطباعة: صفحة مدمجة ومنظمة */
+@page { size: A4; margin: 9mm; }
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #20242a !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 9pt;
+    line-height: 1.35;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .wrap { width: 100%; max-width: none; margin: 0; }
+  .print-meta { display:block; color:#666; font-size:7pt; margin-top:3px; }
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0 !important;
+    border-bottom: 2px solid #b68a32 !important;
+    padding: 0 0 7px !important;
+    margin: 0 0 9px !important;
+  }
+  .brand { color: #8b6824 !important; font-size: 13pt !important; letter-spacing: .4px; }
+  .sub { color: #555 !important; font-size: 8pt !important; }
+  h1 { color: #252525 !important; font-size: 16pt !important; }
+  h2 {
+    color: #72551d !important;
+    font-size: 11pt !important;
+    margin: 0 0 6px !important;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #d8c79e;
+  }
+  .card {
+    background: #fff !important;
+    border: 1px solid #d7d7d7 !important;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+    padding: 9px 10px !important;
+    margin: 7px 0 !important;
+    break-inside: avoid;
+  }
+  .field { margin-bottom: 6px !important; }
+  label { color: #555 !important; font-size: 8pt !important; margin-bottom: 3px !important; }
+  input, textarea, select {
+    background: transparent !important;
+    color: #222 !important;
+    border: 0 !important;
+    border-bottom: 1px solid #c9c9c9 !important;
+    border-radius: 0 !important;
+    padding: 3px 1px !important;
+    font-size: 8.5pt !important;
+    min-height: 0 !important;
+  }
+  textarea { min-height: 28px !important; }
+  .days { gap: 4px !important; }
+  .days label {
+    background: #f7f4ec !important;
+    border: 1px solid #ded5c1 !important;
+    color: #333 !important;
+    border-radius: 4px !important;
+    padding: 3px 6px !important;
+    font-size: 8pt !important;
+  }
+  .days input { width: auto !important; }
+  .date-row { gap: 6px !important; margin: 3px 0 !important; }
+  .date-row input { max-width: 145px; }
+  .point { margin: 3px 0 !important; gap: 5px !important; }
+  .point input { padding: 2px 1px !important; }
+  .drill {
+    background: #fafafa !important;
+    border: 1px solid #ddd !important;
+    border-right: 3px solid #b68a32 !important;
+    border-radius: 5px !important;
+    padding: 7px 9px !important;
+    margin: 5px 0 !important;
+    break-inside: avoid;
+  }
+  .drillhead { color: #72551d !important; margin-bottom: 4px !important; font-size: 9pt !important; }
+  .drillgrid { grid-template-columns: 1fr 125px !important; gap: 8px !important; }
+  .drill .field { margin-bottom: 0 !important; }
+  .actions, .no-print, button, .status { display: none !important; }
+  footer { display:none !important; }
+  footer {
+    color: #777 !important;
+    font-size: 7pt !important;
+    border-top: 1px solid #ddd;
+    padding-top: 5px;
+    margin: 10px 0 0 !important;
+  }
+  .card, .drill { page-break-inside: avoid; }
+}
+
+
+@media print {
+  /* اطبع البيانات المدخلة فقط دون أسماء القوائم والعناوين الثابتة */
+  .card > h2,
+  .card label,
+  .drill .field > label {
+    display: none !important;
+  }
+  .card {
+    padding: 5px 8px !important;
+    margin: 4px 0 !important;
+  }
+  .field { margin-bottom: 3px !important; }
+  .days label { display: none !important; }
+  /* إظهار الأيام المختارة كقيم نصية بدلاً من أسماء عناصر الاختيار */
+  .days input:checked {
+    appearance: none;
+    width: 7px !important;
+    height: 7px !important;
+    border: 1px solid #555 !important;
+    border-radius: 50% !important;
+    background: #555 !important;
+    margin-inline-end: 3px !important;
+  }
+  .drillhead { margin-bottom: 2px !important; }
+}
+
+
+/* نسخة طباعة تحريرية مختصرة */
+.print-sheet { display:none; }
+@page { size:A4; margin:12mm; }
+@media print {
+  body { background:#fff !important; color:#20242a !important; padding:0 !important; margin:0 !important; font:10pt/1.45 Tahoma,Arial,sans-serif !important; }
+  .wrap { max-width:none !important; width:100% !important; }
+  .wrap > header, .wrap > section, .wrap > .actions, .wrap > .status, .wrap > footer { display:none !important; }
+  .print-sheet { display:block !important; }
+  .print-head { border-bottom:2px solid #b68a32; padding:0 0 8px; margin-bottom:12px; }
+  .print-unit { font-size:19pt; font-weight:700; color:#242424; margin:0 0 5px; }
+  .print-meta { color:#666; font-size:9pt; }
+  .print-section { margin:12px 0; break-inside:avoid; }
+  .print-section h2 { font-size:12pt; color:#76571d; margin:0 0 6px; padding-bottom:4px; border-bottom:1px solid #d8c79e; }
+  .print-lines { margin:0; padding:0 18px 0 0; }
+  .print-lines li { margin:3px 0; }
+  .print-drills { width:100%; border-collapse:collapse; table-layout:fixed; font-size:9pt; }
+  .print-drills th { background:#f2ead8 !important; color:#4a3b1e; font-weight:700; }
+  .print-drills th,.print-drills td { border:1px solid #cfc7b7; padding:7px 8px; text-align:right; vertical-align:top; overflow-wrap:anywhere; }
+  .print-drills th:nth-child(1) { width:43%; }
+  .print-drills th:nth-child(2) { width:22%; }
+  .print-drills th:nth-child(3) { width:35%; }
+  .print-extra { white-space:pre-wrap; }
+  .print-empty { color:#999; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<div id="printSheet" class="print-sheet" aria-hidden="true"></div>
+<header class="top">
+ <div><div class="brand">CROCODILE SWIMMING</div><div class="sub">نموذج إعداد الوحدة التعليمية</div></div>
+ <h1>الوحدة التعليمية</h1><div class="print-meta" id="printMeta"></div>
+</header>
+
+<section class="card">
+ <div class="field"><label for="unitName">اسم / رقم الوحدة التعليمية</label><input id="unitName" placeholder="مثال: الوحدة السابعة – السباحة الحرة"></div>
+ <div class="field">
+  <label>تواريخ تنفيذ الوحدة (يمكن إضافة أكثر من تاريخ)</label>
+  <div id="dates"></div>
+  <button type="button" class="secondary small no-print" onclick="addDate()">＋ إضافة تاريخ</button>
+ </div>
+ <div class="field"><label for="level">المستوى</label>
+  <select id="level">
+   <option value="">اختر المستوى</option>
+   <option>المستوى الأول</option>
+   <option>المستوى الثاني</option>
+   <option>المستوى الثالث</option>
+   <option>المستوى الرابع</option>
+   <option>المستوى الخامس</option>
+   <option>المستوى السادس</option>
+   <option>مستوى متقدم</option>
+  </select>
+ </div>
+ <div class="field">
+  <label>أيام تنفيذ الوحدة التعليمية (يمكن اختيار أكثر من يوم)</label>
+  <div class="days" id="days">
+   <label><input type="checkbox" value="السبت"> السبت</label>
+   <label><input type="checkbox" value="الأحد"> الأحد</label>
+   <label><input type="checkbox" value="الإثنين"> الإثنين</label>
+   <label><input type="checkbox" value="الثلاثاء"> الثلاثاء</label>
+   <label><input type="checkbox" value="الأربعاء"> الأربعاء</label>
+   <label><input type="checkbox" value="الخميس"> الخميس</label>
+   <label><input type="checkbox" value="الجمعة"> الجمعة</label>
+  </div>
+ </div>
+</section>
+
+<section class="card">
+ <h2>الهدف</h2>
+ <div id="goals"></div>
+ <button class="secondary small no-print" onclick="addPoint('goals','اكتب نقطة الهدف')">＋ إضافة نقطة</button>
+</section>
+
+<section class="card">
+ <h2>المراجعة</h2>
+ <div id="reviews"></div>
+ <button class="secondary small no-print" onclick="addPoint('reviews','اكتب نقطة المراجعة')">＋ إضافة نقطة</button>
+</section>
+
+<section class="card">
+ <h2>التدريبات (Drills)</h2>
+ <div id="drills"></div>
+ <button class="secondary small no-print" onclick="addDrill()">＋ إضافة دريل جديد</button>
+</section>
+
+<section class="card">
+ <h2>النهاية</h2>
+ <div id="ending"></div>
+ <button class="secondary small no-print" onclick="addPoint('ending','اكتب التمرين الختامي')">＋ إضافة تمرين</button>
+</section>
+
+<section class="card extra-data">
+ <h2>بيانات إضافية</h2>
+ <textarea id="extraData" placeholder="أضف أي بيانات أو ملاحظات إضافية هنا"></textarea>
+</section>
+
+<div class="actions no-print">
+ <button onclick="saveData()">حفظ البيانات</button>
+ <button class="secondary" onclick="restoreSaved()">استرداد آخر حفظ</button>
+ <button class="secondary" onclick="window.print()">طباعة</button>
+ <button class="secondary" onclick="downloadCopy()">حفظ نسخة على الجهاز</button>
+ <button class="secondary" onclick="document.getElementById('backupFile').click()">استرداد نسخة من الجهاز</button>
+ <input id="backupFile" type="file" accept=".json,application/json" class="no-print" style="display:none" onchange="restoreFile(event)">
+ <button class="danger" onclick="clearForm()">مسح النموذج</button>
+</div>
+<div class="status" id="status" aria-live="polite"></div>
+<footer>نموذج إلكتروني قابل للتعديل والطباعة – Crocodile Swimming</footer>
+</div>
+<script>
+let drillCount=0;
+function addDate(value=''){
+ const box=document.getElementById('dates');
+ const row=document.createElement('div'); row.className='date-row';
+ const input=document.createElement('input'); input.type='date'; input.value=value;
+ const del=document.createElement('button'); del.type='button'; del.className='danger small no-print'; del.textContent='حذف';
+ del.onclick=()=>{row.remove();if(!box.querySelector('.date-row'))addDate()};
+ row.append(input,del);box.append(row);
+}
+function addPoint(containerId,placeholder='اكتب النقطة'){
+ const box=document.getElementById(containerId);
+ const row=document.createElement('div'); row.className='point';
+ const input=document.createElement('input'); input.type='text'; input.placeholder=placeholder;
+ const del=document.createElement('button'); del.type='button'; del.className='danger small no-print'; del.textContent='حذف';
+ del.onclick=()=>row.remove();
+ row.append(input,del); box.appendChild(row); input.focus();
+}
+function addDrill(data={}){
+ drillCount++;
+ const box=document.getElementById('drills');
+ const card=document.createElement('div'); card.className='drill';
+ const head=document.createElement('div'); head.className='drillhead';
+ const title=document.createElement('span'); title.textContent='دريل '+drillCount;
+ const del=document.createElement('button'); del.className='danger small no-print'; del.textContent='حذف الدريل'; del.onclick=()=>card.remove();
+ head.append(title,del);
+ const grid=document.createElement('div'); grid.className='drillgrid';
+ const nameWrap=document.createElement('div'); nameWrap.className='field';
+ const nameLabel=document.createElement('label'); nameLabel.textContent='اسم الدريل';
+ const name=document.createElement('input'); name.className='drill-name'; name.placeholder='اكتب اسم الدريل'; name.value=data.name||'';
+ nameWrap.append(nameLabel,name);
+ const repsWrap=document.createElement('div'); repsWrap.className='field';
+ const repsLabel=document.createElement('label'); repsLabel.textContent='عدد التكرارات';
+ const reps=document.createElement('input'); reps.className='drill-reps'; reps.type='text'; reps.placeholder='مثال: 6 × 25 متر'; reps.value=data.reps||'';
+ repsWrap.append(repsLabel,reps);
+ const notesWrap=document.createElement('div'); notesWrap.className='field';
+ const notesLabel=document.createElement('label'); notesLabel.textContent='ملحوظة';
+ const notes=document.createElement('input'); notes.className='drill-notes'; notes.type='text'; notes.placeholder='اكتب ملحوظة'; notes.value=data.notes||'';
+ notesWrap.append(notesLabel,notes);
+ grid.append(nameWrap,repsWrap,notesWrap); card.append(head,grid); box.append(card);
+}
+function values(containerId){return [...document.querySelectorAll('#'+containerId+' .point input')].map(x=>x.value.trim()).filter(Boolean)}
+function collect(){
+ return {unitName:document.getElementById('unitName').value,
+ dates:[...document.querySelectorAll('#dates input[type="date"]')].map(x=>x.value).filter(Boolean),
+ level:document.getElementById('level').value,
+ days:[...document.querySelectorAll('#days input:checked')].map(x=>x.value),
+ goals:values('goals'),reviews:values('reviews'),ending:values('ending'),
+ drills:[...document.querySelectorAll('#drills .drill')].map(d=>({name:d.querySelector('.drill-name').value.trim(),reps:d.querySelector('.drill-reps').value,notes:d.querySelector('.drill-notes')?.value||''})).filter(d=>d.name||d.reps||d.notes),
+  extraData:document.getElementById('extraData').value};
+}
+function load(data){
+ document.getElementById('unitName').value=data.unitName||'';
+ document.getElementById('dates').innerHTML='';
+ (data.dates|| (data.date ? [data.date] : [])).forEach(v=>addDate(v));
+ if(!(data.dates||[]).length && !data.date)addDate();
+ document.getElementById('level').value=data.level||'';
+ document.querySelectorAll('#days input').forEach(x=>x.checked=(data.days||[]).includes(x.value));
+ document.getElementById('goals').innerHTML=''; document.getElementById('reviews').innerHTML=''; document.getElementById('ending').innerHTML=''; document.getElementById('drills').innerHTML=''; drillCount=0;
+ (data.goals||[]).forEach(v=>{addPoint('goals');document.querySelector('#goals .point:last-child input').value=v});
+ (data.reviews||[]).forEach(v=>{addPoint('reviews');document.querySelector('#reviews .point:last-child input').value=v});
+ (data.ending||[]).forEach(v=>{addPoint('ending','اكتب التمرين الختامي');document.querySelector('#ending .point:last-child input').value=v});
+ (data.drills||[]).forEach(addDrill);
+ if(!data.goals?.length)addPoint('goals');
+ if(!data.reviews?.length)addPoint('reviews');
+ if(!data.ending?.length)addPoint('ending','اكتب التمرين الختامي');
+ if(!data.drills?.length)addDrill();
+}
+
+function renderPrintSheet(){
+ const data=collect();
+ const sheet=document.getElementById('printSheet');
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const dates=(data.dates||[]).filter(Boolean).map(d=>{
+   const p=d.split('-'); return p.length===3 ? `${p[2]}/${p[1]}` : d;
+ });
+ const days=(data.days||[]);
+ const meta=[...dates, ...(days.length?['الأيام: '+days.join(' - ')]:[])].join('   |   ');
+ const lines=(arr)=>arr.length?`<ul class="print-lines">${arr.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'';
+ const drills=(data.drills||[]).filter(d=>d.name||d.reps||d.notes);
+ sheet.innerHTML=`
+  <div class="print-head">
+   <div class="print-unit">${esc(data.unitName||'الوحدة التعليمية')}</div>
+   <div class="print-meta">${esc(meta)}</div>
+   ${data.level?`<div class="print-meta">${esc(data.level)}</div>`:''}
+  </div>
+  <section class="print-section"><h2>الهدف</h2>${lines(data.goals||[])}</section>
+  <section class="print-section"><h2>المراجعة</h2>${lines(data.reviews||[])}</section>
+  <section class="print-section">
+   <h2>التدريبات</h2>
+   <table class="print-drills">
+    <thead><tr><th>الدريل</th><th>عدد التكرار</th><th>ملاحظات</th></tr></thead>
+    <tbody>${drills.length?drills.map(d=>`<tr><td>${esc(d.name)}</td><td>${esc(d.reps)}</td><td>${esc(d.notes)}</td></tr>`).join(''):'<tr><td colspan="3" class="print-empty">لا توجد تدريبات مدخلة</td></tr>'}</tbody>
+   </table>
+  </section>
+  <section class="print-section"><h2>النهاية</h2>${lines(data.ending||[])}</section>
+  ${data.extraData?`<section class="print-section"><h2>بيانات إضافية</h2><div class="print-extra">${esc(data.extraData)}</div></section>`:''}
+ `;
+}
+
+function saveData(){
+ try{localStorage.setItem('crocodile_educational_unit',JSON.stringify(collect()));document.getElementById('status').textContent='تم حفظ البيانات على هذا الجهاز والمتصفح.'}
+ catch(e){document.getElementById('status').textContent='تعذر الحفظ التلقائي في هذا المتصفح. استخدم حفظ نسخة على الجهاز.'}
+}
+function restoreSaved(){
+ try{
+  const saved=localStorage.getItem('crocodile_educational_unit');
+  if(!saved){document.getElementById('status').textContent='لا توجد نسخة محفوظة في هذا المتصفح.';return}
+  load(JSON.parse(saved));
+  document.getElementById('status').textContent='تم استرداد آخر نسخة محفوظة بنجاح.';
+ }catch(e){document.getElementById('status').textContent='تعذر استرداد النسخة المحفوظة.'}
+}
+function restoreFile(event){
+ const file=event.target.files && event.target.files[0];
+ if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const data=JSON.parse(reader.result);
+   if(!data || typeof data!=='object')throw new Error('Invalid backup');
+   load(data);
+   localStorage.setItem('crocodile_educational_unit',JSON.stringify(collect()));
+   document.getElementById('status').textContent='تم استرداد النسخة من الجهاز وحفظها في المتصفح.';
+  }catch(e){document.getElementById('status').textContent='الملف غير صالح أو ليس نسخة احتياطية للوحدة التعليمية.'}
+  event.target.value='';
+ };
+ reader.onerror=()=>{document.getElementById('status').textContent='تعذر قراءة ملف النسخة الاحتياطية.'};
+ reader.readAsText(file,'UTF-8');
+}
+function downloadCopy(){
+ const data=collect();
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');
+ a.href=url;a.download='الوحدة-التعليمية-Crocodile.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ document.getElementById('status').textContent='تم تجهيز نسخة البيانات للتنزيل على جهازك.';
+}
+function clearForm(){if(confirm('هل تريد مسح جميع بيانات النموذج؟')){localStorage.removeItem('crocodile_educational_unit');load({});document.getElementById('status').textContent='تم مسح النموذج.'}}
+window.addEventListener('beforeprint',renderPrintSheet);
+try{const saved=localStorage.getItem('crocodile_educational_unit');load(saved?JSON.parse(saved):{})}catch(e){load({})}
+</script>
+</body>
+</html>
